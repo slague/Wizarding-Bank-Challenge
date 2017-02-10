@@ -1,53 +1,43 @@
-require_relative 'person'
-
-
 class Bank
-
-  # def initialize
-  #   @person1 = Person.new("Minerva", 1000)
-  #   @person2 = Person.new("Luna", 500)
-  # end
-
-
 
   attr_reader :bank_name
 
   def initialize(bank_name)
     @bank_name = bank_name
-
+    @account_balance = 0
   end
 
   def open_account(person)
-    #The bank account is specific to an instance of a bank, but belongs to an instance of person
-    #The instance of bank has a method "open_account", which gets passed the instance of person
-    #Once an account is open it will have an account_balance
-    #The account_balance is specific to the account, which is at a certain bank, which belongs to a person
-    #Where will the account_balance start? Can an account be opened without any money?  Must there be an initial deposit amount?
+
+    person.banks[@bank_name] = @account_balance
+
+    puts "An account has been opened at #{@bank_name} in the name of #{person.name}."
+
   end
+    #Once an account is open, it will have an account_balance
+    #The account_balance is specific to the account,
+    #Where will the account_balance start?
 
 
   def deposit(person, amount)
-    #galleons is specific to an instance of Person
-    #account_balance is specific to the account (which is at a specific bank and belongs to a specific person)
 
     if amount > @galleons
       "#{person.name} does not have enough cash to perform this deposit."
-      #Is this supposed to be interpolated? How do I refer back to my instance of Person by "name"?
     else
-      @galleons = @galleons - amount
+      person.banks[@bank_name] = (@account_balance)+amount
+
+      @galleons = @galleons-amount
       @account_balance = @account_balance + amount
 
       "#{amount} galleons have been deposited into #{person.name}'s  #{person.bank} account. Balance: #{@account_balance} Cash: #{@galleons}."
-      #How do I get these objects to talk to one another correctly?
-      #How do I get the correct instance of bank associated (people can have more than one account) with the person in this line?
 
+      #How do I get the correct instance of bank associated (people can have more than one account) with the person in this line?
     end
   end
 
 
 
   def withdrawl(person, amount)
-
     if amount > @account_balance
       "Insufficient funds."
     else
@@ -75,7 +65,6 @@ class Bank
     #How am I keeping track of multiple bank accounts and thier different balances?-- each instance of Person can have multiple accounts with different balances... above I only have one "account_balance" instance variable. This won't work
     #In order to transfer does a person need to "open_account" with a second bank?
     #Should this be included in the method? or "cannot transfer to an unopened account?
-
     end
   end
 
@@ -90,11 +79,3 @@ class Bank
   end
 
 end
-
-
-
-
-chase = Bank.new("JP Morgan Chase")
-chase.open_account(person1)
-
-wells_fargo = Bank.new("Wells Fargo")

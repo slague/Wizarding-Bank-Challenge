@@ -2,17 +2,15 @@ class Person
 
   attr_reader :name, :galleons
 
+  attr_accessor :banks
+
   def initialize(name, galleons)
     @name = name
     @galleons = galleons
-    # @account_balance ...? each instance of Person carries a specific account_balance at an instance of Bank
+    @banks = {}
   end
 
 
-  def owns_account
-    #an instance of Person can open an account...an opening an account is a methond w/in the class Bank
-    #an instance of Person opens an account at an instance of Bank
-  end
 
 #A person has a name
 #A person has galleons
@@ -31,6 +29,6 @@ class Person
 
 end
 
-person1 = Person.new("Minerva", 1000)
-
-person2 = Person.new("Luna", 500)
+# person1 = Person.new("Minerva", 1000)
+#
+# person2 = Person.new("Luna", 500)
